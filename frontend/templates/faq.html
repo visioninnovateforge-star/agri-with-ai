@@ -1,0 +1,514 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ - Agriculture Insights Platform{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="bg-gradient-to-r from-agri-600 to-blue-600 text-white py-16">
+    <div class="container mx-auto px-4">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
+            <p class="text-xl text-agri-100 max-w-3xl mx-auto">Find answers to common questions about our agriculture insights platform</p>
+        </div>
+    </div>
+</div>
+
+<!-- Search Bar -->
+<div class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="max-w-2xl mx-auto">
+            <div class="relative">
+                <input type="text" id="faqSearch" class="input-field w-full pl-10 pr-4" placeholder="Search for answers...">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                    <i class="fas fa-search text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Categories -->
+<div class="py-8">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <button class="faq-category-btn active" data-category="all">All Questions</button>
+            <button class="faq-category-btn" data-category="getting-started">Getting Started</button>
+            <button class="faq-category-btn" data-category="features">Features</button>
+            <button class="faq-category-btn" data-category="data">Data & Analysis</button>
+            <button class="faq-category-btn" data-category="pricing">Pricing</button>
+            <button class="faq-category-btn" data-category="technical">Technical</button>
+            <button class="faq-category-btn" data-category="support">Support</button>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <!-- Getting Started -->
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Getting Started</h2>
+                
+                <div class="faq-item card" data-category="getting-started">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(1)">
+                        <h3 class="text-lg font-semibold text-gray-800">How do I create an account?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-1"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-1">
+                        <p class="mb-4">Creating an account is simple:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>Click "Sign Up" in the top navigation</li>
+                            <li>Choose your role: Farmer, Agronomist, or Researcher</li>
+                            <li>Fill in your personal information</li>
+                            <li>Create a secure password</li>
+                            <li>Verify your email address</li>
+                        </ol>
+                        <p class="mt-4">You can also use our demo accounts to explore the platform without signing up.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="getting-started">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(2)">
+                        <h3 class="text-lg font-semibold text-gray-800">What's the difference between user roles?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-2"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-2">
+                        <div class="space-y-4">
+                            <div class="p-4 bg-agri-50 rounded-lg">
+                                <div class="font-semibold text-agri-800 mb-2">🚜 Farmers</div>
+                                <p>Upload field data, view crop health analysis, get yield predictions, and receive actionable recommendations for your specific fields.</p>
+                            </div>
+                            <div class="p-4 bg-earth-50 rounded-lg">
+                                <div class="font-semibold text-earth-800 mb-2">🔬 Agronomists</div>
+                                <p>Analyze data from multiple farms, validate AI predictions, generate reports, and provide expert recommendations to farmers.</p>
+                            </div>
+                            <div class="p-4 bg-blue-50 rounded-lg">
+                                <div class="font-semibold text-blue-800 mb-2">🧪 Researchers</div>
+                                <p>Access aggregated agricultural data, export datasets, perform advanced analytics, and conduct research studies.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="getting-started">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(3)">
+                        <h3 class="text-lg font-semibold text-gray-800">How do I upload my field data?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-3"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-3">
+                        <p class="mb-4">You can upload field data in several ways:</p>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li><strong>Images:</strong> Upload field photos, soil samples, or crop images</li>
+                            <li><strong>GPS Data:</strong> Field boundaries and coordinates</li>
+                            <li><strong>Sensor Data:</strong> Soil moisture, temperature, pH readings</li>
+                            <li><strong>Historical Records:</strong> Previous yield data, fertilizer applications</li>
+                        </ul>
+                        <p>Supported formats include JPG, PNG, TIFF for images, and CSV, Excel for data files. Maximum file size is 50MB per upload.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="space-y-6 mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Features</h2>
+
+                <div class="faq-item card" data-category="features">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(4)">
+                        <h3 class="text-lg font-semibold text-gray-800">What is NDVI analysis and how does it work?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-4"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-4">
+                        <p class="mb-4">NDVI (Normalized Difference Vegetation Index) is a measure of vegetation health using satellite imagery.</p>
+                        <div class="space-y-3">
+                            <div><strong>How it works:</strong> Compares near-infrared and visible light reflectance from plants</div>
+                            <div><strong>Scale:</strong> Values from -1 to +1, where higher values indicate healthier vegetation</div>
+                            <div><strong>Applications:</strong> Crop health monitoring, yield prediction, irrigation planning</div>
+                            <div><strong>Data source:</strong> Sentinel-2 satellite imagery updated every 5 days</div>
+                        </div>
+                        <p class="mt-4">Our platform automatically processes this data to create easy-to-understand heatmaps and trends for your fields.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="features">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(5)">
+                        <h3 class="text-lg font-semibold text-gray-800">How accurate are the yield predictions?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-5"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-5">
+                        <p class="mb-4">Our AI models achieve high accuracy rates:</p>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li><strong>Corn:</strong> 92-96% accuracy within 10% of actual yield</li>
+                            <li><strong>Soybeans:</strong> 89-94% accuracy within 10% of actual yield</li>
+                            <li><strong>Wheat:</strong> 87-92% accuracy within 10% of actual yield</li>
+                        </ul>
+                        <p class="mb-4">Accuracy depends on several factors:</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>Quality and completeness of input data</li>
+                            <li>Historical data availability for your region</li>
+                            <li>Weather conditions and unexpected events</li>
+                            <li>Time in growing season (later predictions are more accurate)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="features">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(6)">
+                        <h3 class="text-lg font-semibold text-gray-800">Can the platform detect crop diseases and pests?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-6"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-6">
+                        <p class="mb-4">Yes! Our AI can identify various crop issues:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="p-3 bg-red-50 rounded">
+                                <div class="font-semibold text-red-800 mb-2">Diseases</div>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Fungal infections</li>
+                                    <li>• Bacterial diseases</li>
+                                    <li>• Viral conditions</li>
+                                    <li>• Blight and rust</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-yellow-50 rounded">
+                                <div class="font-semibold text-yellow-800 mb-2">Pests</div>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Insect damage</li>
+                                    <li>• Larvae infestations</li>
+                                    <li>• Aphid colonies</li>
+                                    <li>• Caterpillar feeding</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>Simply upload clear photos of affected plants, and our AI will analyze them within minutes, providing identification and treatment recommendations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data & Analysis -->
+            <div class="space-y-6 mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Data & Analysis</h2>
+
+                <div class="faq-item card" data-category="data">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(7)">
+                        <h3 class="text-lg font-semibold text-gray-800">Where does the satellite data come from?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-7"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-7">
+                        <p class="mb-4">We use multiple high-quality satellite data sources:</p>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li><strong>Sentinel-2:</strong> Primary source for NDVI and multispectral analysis (10m resolution, 5-day revisit)</li>
+                            <li><strong>Landsat 8/9:</strong> Long-term historical data (30m resolution, 16-day revisit)</li>
+                            <li><strong>Planet Labs:</strong> High-resolution daily imagery for premium users (3m resolution)</li>
+                        </ul>
+                        <p>All data is processed through cloud computing systems to remove atmospheric interference and ensure accuracy.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="data">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(8)">
+                        <h3 class="text-lg font-semibold text-gray-800">How is my data protected and secured?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-8"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-8">
+                        <p class="mb-4">We take data security very seriously:</p>
+                        <div class="space-y-3">
+                            <div><strong>Encryption:</strong> All data encrypted in transit (TLS 1.3) and at rest (AES-256)</div>
+                            <div><strong>Access Control:</strong> Role-based permissions and multi-factor authentication</div>
+                            <div><strong>Compliance:</strong> SOC 2 Type II certified, GDPR compliant</div>
+                            <div><strong>Privacy:</strong> Your field data is private and never shared without consent</div>
+                            <div><strong>Backups:</strong> Regular automated backups with disaster recovery procedures</div>
+                        </div>
+                        <p class="mt-4">Researchers only access aggregated, anonymized data for scientific purposes.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="data">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(9)">
+                        <h3 class="text-lg font-semibold text-gray-800">Can I export my data and analysis results?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-9"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-9">
+                        <p class="mb-4">Yes! You can export your data in multiple formats:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <div class="font-semibold mb-2">Available Formats:</div>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li>CSV for spreadsheet analysis</li>
+                                    <li>PDF reports for sharing</li>
+                                    <li>GeoJSON for GIS applications</li>
+                                    <li>PNG/JPEG for maps and charts</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="font-semibold mb-2">Export Options:</div>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li>NDVI time series data</li>
+                                    <li>Yield prediction reports</li>
+                                    <li>Field boundary shapefiles</li>
+                                    <li>Historical analysis charts</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="space-y-6 mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Pricing</h2>
+
+                <div class="faq-item card" data-category="pricing">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(10)">
+                        <h3 class="text-lg font-semibold text-gray-800">What pricing plans are available?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-10"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-10">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div class="p-4 border rounded-lg">
+                                <div class="font-semibold text-agri-600 mb-2">Starter - Free</div>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Up to 50 acres</li>
+                                    <li>• Basic NDVI analysis</li>
+                                    <li>• Monthly reports</li>
+                                    <li>• Email support</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 border rounded-lg">
+                                <div class="font-semibold text-blue-600 mb-2">Professional - $49/month</div>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Up to 500 acres</li>
+                                    <li>• Advanced AI predictions</li>
+                                    <li>• Weekly reports</li>
+                                    <li>• Priority support</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 border rounded-lg">
+                                <div class="font-semibold text-purple-600 mb-2">Enterprise - Custom</div>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Unlimited acres</li>
+                                    <li>• Custom integrations</li>
+                                    <li>• Daily updates</li>
+                                    <li>• Dedicated support</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>All plans include a 30-day free trial. Educational discounts available for students and researchers.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="pricing">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(11)">
+                        <h3 class="text-lg font-semibold text-gray-800">Is there a free trial available?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-11"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-11">
+                        <p class="mb-4">Yes! We offer several ways to try our platform:</p>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li><strong>30-Day Free Trial:</strong> Full access to Professional features</li>
+                            <li><strong>Demo Accounts:</strong> Explore the platform with sample data</li>
+                            <li><strong>Free Starter Plan:</strong> Permanent free access with basic features</li>
+                        </ul>
+                        <p class="mt-4">No credit card required for the trial. You can upgrade, downgrade, or cancel anytime.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical -->
+            <div class="space-y-6 mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Technical</h2>
+
+                <div class="faq-item card" data-category="technical">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(12)">
+                        <h3 class="text-lg font-semibold text-gray-800">What browsers and devices are supported?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-12"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-12">
+                        <p class="mb-4">Our platform works on all modern devices and browsers:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <div class="font-semibold mb-2">Desktop Browsers:</div>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li>Chrome 90+ (recommended)</li>
+                                    <li>Firefox 88+</li>
+                                    <li>Safari 14+</li>
+                                    <li>Edge 90+</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="font-semibold mb-2">Mobile Devices:</div>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li>iOS 14+ (Safari, Chrome)</li>
+                                    <li>Android 8+ (Chrome, Firefox)</li>
+                                    <li>Responsive design for tablets</li>
+                                    <li>Touch-optimized interface</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="technical">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(13)">
+                        <h3 class="text-lg font-semibold text-gray-800">Do you have an API for integrations?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-13"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-13">
+                        <p class="mb-4">Yes! We provide a comprehensive REST API:</p>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li><strong>Field Management:</strong> Create, update, and manage field boundaries</li>
+                            <li><strong>Data Upload:</strong> Programmatically upload sensor data and images</li>
+                            <li><strong>Analysis Results:</strong> Access NDVI, yield predictions, and health analysis</li>
+                            <li><strong>Real-time Webhooks:</strong> Get notified of new analysis results</li>
+                        </ul>
+                        <p class="mb-4">API features:</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>RESTful design with JSON responses</li>
+                            <li>OAuth 2.0 authentication</li>
+                            <li>Rate limiting and usage analytics</li>
+                            <li>SDKs available for Python, JavaScript, and R</li>
+                        </ul>
+                        <p>Contact our team for API documentation and access keys.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="space-y-6 mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Support</h2>
+
+                <div class="faq-item card" data-category="support">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(14)">
+                        <h3 class="text-lg font-semibold text-gray-800">How can I get help if I have issues?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-14"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-14">
+                        <p class="mb-4">We offer multiple support channels:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-3">
+                                <div class="p-3 bg-blue-50 rounded">
+                                    <div class="font-semibold text-blue-800">📧 Email Support</div>
+                                    <div class="text-sm">support@agriinsights.com</div>
+                                    <div class="text-xs text-gray-600">Response within 24 hours</div>
+                                </div>
+                                <div class="p-3 bg-green-50 rounded">
+                                    <div class="font-semibold text-green-800">💬 Live Chat</div>
+                                    <div class="text-sm">Available Mon-Fri, 9AM-6PM PST</div>
+                                    <div class="text-xs text-gray-600">Instant response</div>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-purple-50 rounded">
+                                    <div class="font-semibold text-purple-800">📞 Phone Support</div>
+                                    <div class="text-sm">Professional & Enterprise plans</div>
+                                    <div class="text-xs text-gray-600">Priority support</div>
+                                </div>
+                                <div class="p-3 bg-yellow-50 rounded">
+                                    <div class="font-semibold text-yellow-800">📚 Help Center</div>
+                                    <div class="text-sm">Guides, tutorials, and documentation</div>
+                                    <div class="text-xs text-gray-600">Available 24/7</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item card" data-category="support">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleFAQ(15)">
+                        <h3 class="text-lg font-semibold text-gray-800">Do you provide training and onboarding?</h3>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200" id="faq-icon-15"></i>
+                    </div>
+                    <div class="hidden mt-4 text-gray-600" id="faq-content-15">
+                        <p class="mb-4">Yes! We provide comprehensive training resources:</p>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li><strong>Getting Started Guide:</strong> Step-by-step onboarding for new users</li>
+                            <li><strong>Video Tutorials:</strong> Platform walkthroughs and feature demonstrations</li>
+                            <li><strong>Webinar Series:</strong> Monthly training sessions on advanced features</li>
+                            <li><strong>One-on-One Training:</strong> Personalized sessions for Enterprise customers</li>
+                        </ul>
+                        <p>We also offer custom training programs for large organizations and educational institutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact CTA -->
+        <div class="text-center mt-16 p-8 bg-agri-50 rounded-2xl">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Still have questions?</h2>
+            <p class="text-gray-600 mb-6">Our support team is here to help you get the most out of our platform.</p>
+            <div class="space-x-4">
+                <a href="/contact" class="btn-primary">Contact Support</a>
+                <a href="/demo" class="px-6 py-3 border border-agri-600 text-agri-600 rounded-lg hover:bg-agri-50 transition-colors">Schedule Demo</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.faq-category-btn {
+    @apply px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors;
+}
+
+.faq-category-btn.active {
+    @apply bg-agri-600 text-white border-agri-600;
+}
+
+.faq-item.hidden {
+    display: none;
+}
+</style>
+
+<script>
+function toggleFAQ(id) {
+    const content = document.getElementById(`faq-content-${id}`);
+    const icon = document.getElementById(`faq-icon-${id}`);
+    
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.classList.add('fa-chevron-up', 'rotate-180');
+        icon.classList.remove('fa-chevron-down');
+    } else {
+        content.classList.add('hidden');
+        icon.classList.remove('fa-chevron-up', 'rotate-180');
+        icon.classList.add('fa-chevron-down');
+    }
+}
+
+// Category filtering
+document.querySelectorAll('.faq-category-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const category = this.dataset.category;
+        
+        // Update active button
+        document.querySelectorAll('.faq-category-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Filter FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    });
+});
+
+// Search functionality
+document.getElementById('faqSearch').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(searchTerm) || searchTerm === '') {
+            item.classList.remove('hidden');
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+    
+    // Reset category filter when searching
+    if (searchTerm) {
+        document.querySelectorAll('.faq-category-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector('[data-category="all"]').classList.add('active');
+    }
+});
+</script>
+{% endblock %}

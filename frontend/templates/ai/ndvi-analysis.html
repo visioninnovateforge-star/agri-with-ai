@@ -1,0 +1,419 @@
+{% extends "base.html" %}
+
+{% block title %}NDVI Analysis - Agriculture Insights Platform{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="bg-gradient-to-r from-green-600 to-blue-600 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">NDVI Analysis</h1>
+            <p class="text-xl text-green-100">Normalized Difference Vegetation Index - Real-time vegetation health monitoring</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="py-8">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Control Panel -->
+            <div class="lg:col-span-1">
+                <div class="card sticky-top">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Analysis Controls</h2>
+                    
+                    <!-- Field Selection -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Select Field</label>
+                            <select id="fieldSelect" class="input-field w-full">
+                                <option value="">Choose a field...</option>
+                                <option value="north-field">North Field (120 acres)</option>
+                                <option value="south-field">South Field (85 acres)</option>
+                                <option value="east-field">East Field (95 acres)</option>
+                                <option value="west-field">West Field (140 acres)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
+                            <select id="timePeriod" class="input-field w-full">
+                                <option value="current">Current (Latest)</option>
+                                <option value="7days">Last 7 Days</option>
+                                <option value="30days">Last 30 Days</option>
+                                <option value="season">Growing Season</option>
+                                <option value="year">Past Year</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Analysis Type</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="radio" name="analysisType" value="heatmap" checked class="mr-2">
+                                    <span class="text-sm">NDVI Heatmap</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="analysisType" value="trends" class="mr-2">
+                                    <span class="text-sm">Temporal Trends</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="analysisType" value="zones" class="mr-2">
+                                    <span class="text-sm">Management Zones</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="analysisType" value="comparison" class="mr-2">
+                                    <span class="text-sm">Historical Comparison</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">NDVI Threshold</label>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">Low Vegetation</span>
+                                    <span class="text-sm font-medium">0.0 - 0.3</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">Moderate Vegetation</span>
+                                    <span class="text-sm font-medium">0.3 - 0.6</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">High Vegetation</span>
+                                    <span class="text-sm font-medium">0.6 - 1.0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="runAnalysis" class="btn-primary w-full">
+                            <i class="fas fa-play mr-2"></i>
+                            Run Analysis
+                        </button>
+
+                        <button class="w-full p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-download mr-2"></i>
+                            Export Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Analysis Area -->
+            <div class="lg:col-span-3 space-y-8">
+                <!-- NDVI Heatmap -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">NDVI Heatmap Visualization</h2>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Last Updated:</span>
+                            <span class="text-sm font-medium text-gray-800">Today, 3:45 PM</span>
+                            <button class="text-green-600 hover:text-green-700 ml-2">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Heatmap Container -->
+                    <div id="ndviHeatmap" class="bg-gray-100 rounded-lg h-96 flex items-center justify-center mb-6 relative">
+                        <div class="text-center text-gray-600">
+                            <i class="fas fa-map text-6xl mb-4"></i>
+                            <p class="text-lg font-medium">NDVI Heatmap</p>
+                            <p class="text-sm">Select a field to view vegetation health visualization</p>
+                        </div>
+                        
+                        <!-- Sample overlay showing NDVI legend -->
+                        <div class="absolute bottom-4 left-4 bg-white rounded-lg p-4 shadow-lg">
+                            <div class="text-sm font-medium mb-2">NDVI Scale</div>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-4 h-4 bg-red-500 rounded"></div>
+                                <span class="text-xs">0.0</span>
+                                <div class="w-8 h-2 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded"></div>
+                                <span class="text-xs">1.0</span>
+                                <div class="w-4 h-4 bg-green-500 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center p-4 bg-green-50 rounded-lg">
+                            <div class="text-2xl font-bold text-green-600">0.76</div>
+                            <div class="text-sm text-gray-600">Avg NDVI</div>
+                        </div>
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <div class="text-2xl font-bold text-blue-600">85%</div>
+                            <div class="text-sm text-gray-600">Healthy Areas</div>
+                        </div>
+                        <div class="text-center p-4 bg-yellow-50 rounded-lg">
+                            <div class="text-2xl font-bold text-yellow-600">12%</div>
+                            <div class="text-sm text-gray-600">Moderate Areas</div>
+                        </div>
+                        <div class="text-center p-4 bg-red-50 rounded-lg">
+                            <div class="text-2xl font-bold text-red-600">3%</div>
+                            <div class="text-sm text-gray-600">Stressed Areas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Temporal Analysis -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">NDVI Temporal Trends</h2>
+                        <div class="flex space-x-2">
+                            <select class="input-field text-sm">
+                                <option>Daily Average</option>
+                                <option>Weekly Average</option>
+                                <option>Monthly Average</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-100 rounded-lg h-64 flex items-center justify-center mb-4">
+                        <canvas id="ndviTrendsChart" width="600" height="200"></canvas>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div class="text-center">
+                            <div class="font-medium text-gray-800">Peak NDVI</div>
+                            <div class="text-green-600">0.92 (July 15)</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="font-medium text-gray-800">Growth Rate</div>
+                            <div class="text-blue-600">+0.15/month</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="font-medium text-gray-800">Variability</div>
+                            <div class="text-purple-600">Low (CV: 0.12)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Management Zones -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Management Zone Recommendations</h2>
+                        <button class="btn-primary text-sm">
+                            <i class="fas fa-magic mr-1"></i>
+                            Generate Zones
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <div class="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+                                <h3 class="font-semibold text-gray-800">High Performance Zone</h3>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Area:</span>
+                                    <span class="font-medium">85 acres (85%)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Avg NDVI:</span>
+                                    <span class="font-medium">0.78</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Recommendation:</span>
+                                    <span class="font-medium text-green-600">Maintain current</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <div class="w-4 h-4 bg-yellow-500 rounded-full mr-2"></div>
+                                <h3 class="font-semibold text-gray-800">Moderate Performance Zone</h3>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Area:</span>
+                                    <span class="font-medium">12 acres (12%)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Avg NDVI:</span>
+                                    <span class="font-medium">0.45</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Recommendation:</span>
+                                    <span class="font-medium text-yellow-600">Monitor closely</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <div class="w-4 h-4 bg-red-500 rounded-full mr-2"></div>
+                                <h3 class="font-semibold text-gray-800">Low Performance Zone</h3>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Area:</span>
+                                    <span class="font-medium">3 acres (3%)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Avg NDVI:</span>
+                                    <span class="font-medium">0.25</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Recommendation:</span>
+                                    <span class="font-medium text-red-600">Immediate action</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Items -->
+                <div class="card">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Recommended Actions</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start p-4 bg-red-50 border-l-4 border-red-400 rounded-lg">
+                            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mr-3">
+                                <i class="fas fa-exclamation-triangle text-red-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800 mb-1">Immediate Attention Required</h3>
+                                <p class="text-sm text-gray-600 mb-2">
+                                    3 acres in the northwest corner show critically low NDVI values (0.15-0.25). 
+                                    This indicates severe plant stress or bare soil conditions.
+                                </p>
+                                <div class="flex space-x-2">
+                                    <button class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+                                        Field Inspection
+                                    </button>
+                                    <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                                        Soil Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 mr-3">
+                                <i class="fas fa-tint text-yellow-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800 mb-1">Irrigation Optimization</h3>
+                                <p class="text-sm text-gray-600 mb-2">
+                                    Moderate stress detected in 12 acres. Consider adjusting irrigation schedule 
+                                    or checking system efficiency in these areas.
+                                </p>
+                                <div class="flex space-x-2">
+                                    <button class="bg-yellow-600 text-white px-3 py-1 rounded text-sm hover:bg-yellow-700">
+                                        Schedule Irrigation
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start p-4 bg-green-50 border-l-4 border-green-400 rounded-lg">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mr-3">
+                                <i class="fas fa-check-circle text-green-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800 mb-1">Excellent Performance</h3>
+                                <p class="text-sm text-gray-600 mb-2">
+                                    85% of the field shows excellent vegetation health with NDVI values above 0.7. 
+                                    Continue current management practices.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // NDVI Trends Chart
+    const ctx = document.getElementById('ndviTrendsChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'NDVI Values',
+                data: [0.15, 0.18, 0.25, 0.45, 0.65, 0.78, 0.92, 0.85, 0.75, 0.55, 0.35, 0.20],
+                borderColor: '#10B981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 1.0,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toFixed(1);
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return 'NDVI: ' + context.parsed.y.toFixed(2);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Analysis controls
+    document.getElementById('runAnalysis').addEventListener('click', function() {
+        const field = document.getElementById('fieldSelect').value;
+        const timePeriod = document.getElementById('timePeriod').value;
+        
+        if (!field) {
+            alert('Please select a field to analyze');
+            return;
+        }
+        
+        // Simulate analysis
+        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-play mr-2"></i>Run Analysis';
+            this.disabled = false;
+            
+            // Update heatmap placeholder
+            document.getElementById('ndviHeatmap').innerHTML = `
+                <div class="text-center text-gray-600">
+                    <i class="fas fa-map text-6xl mb-4 text-green-500"></i>
+                    <p class="text-lg font-medium">Analysis Complete</p>
+                    <p class="text-sm">NDVI data for ${field} - ${timePeriod}</p>
+                </div>
+                <div class="absolute bottom-4 left-4 bg-white rounded-lg p-4 shadow-lg">
+                    <div class="text-sm font-medium mb-2">NDVI Scale</div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-red-500 rounded"></div>
+                        <span class="text-xs">0.0</span>
+                        <div class="w-8 h-2 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded"></div>
+                        <span class="text-xs">1.0</span>
+                        <div class="w-4 h-4 bg-green-500 rounded"></div>
+                    </div>
+                </div>
+            `;
+        }, 2000);
+    });
+});
+</script>
+{% endblock %}

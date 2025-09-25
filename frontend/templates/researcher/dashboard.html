@@ -1,0 +1,433 @@
+{% extends "base.html" %}
+
+{% block title %}Researcher Dashboard - Agriculture Insights Platform{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">Research Dashboard</h1>
+                <p class="text-blue-100">Advanced analytics and data insights for agricultural research</p>
+            </div>
+            <div class="text-right">
+                <div class="text-2xl font-bold">Dr. Michael Thompson</div>
+                <div class="text-blue-200">Agricultural Research Scientist</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Research Metrics -->
+<div class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-blue-600">1.2M</div>
+                    <div class="text-sm text-gray-600">Data Points</div>
+                </div>
+            </div>
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-600">50K</div>
+                    <div class="text-sm text-gray-600">Fields Analyzed</div>
+                </div>
+            </div>
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-purple-600">25</div>
+                    <div class="text-sm text-gray-600">Research Projects</div>
+                </div>
+            </div>
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-600">8</div>
+                    <div class="text-sm text-gray-600">Active Studies</div>
+                </div>
+            </div>
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-red-600">156</div>
+                    <div class="text-sm text-gray-600">Reports Generated</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="py-8">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Data Analytics Overview -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Agricultural Trends Analysis</h2>
+                        <div class="flex space-x-2">
+                            <select class="input-field text-sm">
+                                <option>Last 12 Months</option>
+                                <option>Last 5 Years</option>
+                                <option>All Time</option>
+                            </select>
+                            <select class="input-field text-sm">
+                                <option>All Regions</option>
+                                <option>North America</option>
+                                <option>Europe</option>
+                                <option>Asia</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Trend Chart -->
+                    <div class="bg-gray-100 rounded-lg h-80 flex items-center justify-center mb-4">
+                        <canvas id="trendsChart" width="600" height="300"></canvas>
+                    </div>
+
+                    <!-- Trend Legend -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                            <span>Yield Trends</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                            <span>NDVI Patterns</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                            <span>Weather Impact</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                            <span>Stress Events</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Research Projects -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Active Research Projects</h2>
+                        <button class="btn-primary text-sm">
+                            <i class="fas fa-plus mr-1"></i>
+                            New Project
+                        </button>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="border rounded-lg p-6 hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Climate Impact on Corn Yield</h3>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">Active</span>
+                                    <div class="text-sm text-gray-500">85% Complete</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Analyzing the correlation between climate variables and corn yield across different regions over the past 10 years.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-500">
+                                    <i class="fas fa-calendar mr-1"></i>
+                                    Started: Jan 2024 • Due: Jun 2024
+                                </div>
+                                <div class="space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-700 text-sm">
+                                        <i class="fas fa-eye mr-1"></i>View Data
+                                    </button>
+                                    <button class="text-green-600 hover:text-green-700 text-sm">
+                                        <i class="fas fa-download mr-1"></i>Export
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-6 hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800">NDVI Prediction Model Validation</h3>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm font-medium">In Review</span>
+                                    <div class="text-sm text-gray-500">92% Complete</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Validating machine learning models for NDVI prediction using satellite imagery and ground truth data.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-500">
+                                    <i class="fas fa-calendar mr-1"></i>
+                                    Started: Oct 2023 • Due: Apr 2024
+                                </div>
+                                <div class="space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-700 text-sm">
+                                        <i class="fas fa-eye mr-1"></i>View Data
+                                    </button>
+                                    <button class="text-green-600 hover:text-green-700 text-sm">
+                                        <i class="fas fa-download mr-1"></i>Export
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-6 hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Soil Health Indicators Study</h3>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">Planning</span>
+                                    <div class="text-sm text-gray-500">15% Complete</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Comprehensive analysis of soil health indicators and their relationship with crop productivity.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-500">
+                                    <i class="fas fa-calendar mr-1"></i>
+                                    Started: Mar 2024 • Due: Dec 2024
+                                </div>
+                                <div class="space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-700 text-sm">
+                                        <i class="fas fa-eye mr-1"></i>View Data
+                                    </button>
+                                    <button class="text-green-600 hover:text-green-700 text-sm">
+                                        <i class="fas fa-download mr-1"></i>Export
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <a href="/researcher/projects" class="text-blue-600 hover:text-blue-700 font-medium">
+                            View All Projects <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-8">
+                <!-- Data Export Tools -->
+                <div class="card">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Data Export & Analysis</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 border-2 border-dashed border-blue-300 rounded-lg">
+                            <h3 class="font-semibold text-gray-800 mb-2">Quick Export</h3>
+                            <div class="space-y-2">
+                                <select class="input-field w-full text-sm">
+                                    <option>Select Dataset</option>
+                                    <option>NDVI Time Series</option>
+                                    <option>Yield Predictions</option>
+                                    <option>Weather Data</option>
+                                    <option>Soil Analysis</option>
+                                    <option>Crop Health Metrics</option>
+                                </select>
+                                <select class="input-field w-full text-sm">
+                                    <option>Last 30 Days</option>
+                                    <option>Last 90 Days</option>
+                                    <option>Last Year</option>
+                                    <option>Custom Range</option>
+                                </select>
+                                <button class="btn-primary w-full text-sm">
+                                    <i class="fas fa-download mr-1"></i>
+                                    Export CSV
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <button class="w-full p-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm">
+                                <i class="fas fa-database mr-2"></i>
+                                Advanced Query Builder
+                            </button>
+
+                            <button class="w-full p-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm">
+                                <i class="fas fa-chart-bar mr-2"></i>
+                                Statistical Analysis
+                            </button>
+
+                            <button class="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                                <i class="fas fa-robot mr-2"></i>
+                                ML Model Training
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Overview -->
+                <div class="card">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Available Datasets</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                            <div>
+                                <div class="font-semibold text-gray-800">NDVI Time Series</div>
+                                <div class="text-sm text-gray-600">50,000 fields • 5-year span</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-green-600 font-medium">Updated</div>
+                                <div class="text-xs text-gray-500">2 hours ago</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                            <div>
+                                <div class="font-semibold text-gray-800">Weather Data</div>
+                                <div class="text-sm text-gray-600">Global coverage • Daily updates</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-blue-600 font-medium">Live</div>
+                                <div class="text-xs text-gray-500">Real-time</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                            <div>
+                                <div class="font-semibold text-gray-800">Yield Records</div>
+                                <div class="text-sm text-gray-600">15,000 farms • 10-year history</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-yellow-600 font-medium">Processing</div>
+                                <div class="text-xs text-gray-500">6 hours ago</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
+                            <div>
+                                <div class="font-semibold text-gray-800">Soil Samples</div>
+                                <div class="text-sm text-gray-600">25,000 samples • Lab verified</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-purple-600 font-medium">Available</div>
+                                <div class="text-xs text-gray-500">Yesterday</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <a href="/researcher/datasets" class="text-blue-600 hover:text-blue-700 font-medium">
+                            Browse All Datasets <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Research Tools -->
+                <div class="card">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Research Tools</h2>
+                    
+                    <div class="space-y-3">
+                        <a href="/researcher/correlation-analysis" class="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-project-diagram text-blue-600 mr-3"></i>
+                                <div>
+                                    <div class="font-medium text-gray-800">Correlation Analysis</div>
+                                    <div class="text-sm text-gray-600">Statistical relationships</div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="/researcher/time-series" class="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-line text-green-600 mr-3"></i>
+                                <div>
+                                    <div class="font-medium text-gray-800">Time Series Analysis</div>
+                                    <div class="text-sm text-gray-600">Temporal patterns</div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="/researcher/geospatial" class="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-globe text-purple-600 mr-3"></i>
+                                <div>
+                                    <div class="font-medium text-gray-800">Geospatial Analysis</div>
+                                    <div class="text-sm text-gray-600">Location-based insights</div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="/researcher/ml-playground" class="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-robot text-orange-600 mr-3"></i>
+                                <div>
+                                    <div class="font-medium text-gray-800">ML Playground</div>
+                                    <div class="text-sm text-gray-600">Model experimentation</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Trends Analysis Chart
+    const ctx = document.getElementById('trendsChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Yield Trends',
+                data: [75, 78, 82, 85, 88, 92, 95, 97, 94, 89, 82, 76],
+                borderColor: '#10B981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                tension: 0.4
+            }, {
+                label: 'NDVI Patterns',
+                data: [0.3, 0.35, 0.45, 0.65, 0.75, 0.85, 0.88, 0.82, 0.75, 0.65, 0.45, 0.35].map(x => x * 100),
+                borderColor: '#3B82F6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                tension: 0.4
+            }, {
+                label: 'Weather Impact',
+                data: [65, 68, 72, 75, 79, 82, 85, 83, 79, 74, 68, 63],
+                borderColor: '#F59E0B',
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                tension: 0.4
+            }, {
+                label: 'Stress Events',
+                data: [25, 22, 18, 15, 12, 8, 5, 7, 12, 18, 22, 26],
+                borderColor: '#EF4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

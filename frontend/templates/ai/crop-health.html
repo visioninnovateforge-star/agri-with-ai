@@ -1,0 +1,474 @@
+{% extends "base.html" %}
+
+{% block title %}Crop Health Analysis - Agriculture Insights Platform{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="bg-gradient-to-r from-green-600 to-teal-600 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Crop Health Analysis</h1>
+            <p class="text-xl text-green-100">AI-powered detection of crop stress, diseases, and health indicators</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="py-8">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Upload and Controls -->
+            <div class="lg:col-span-1">
+                <div class="card sticky-top">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Upload & Analysis</h2>
+                    
+                    <!-- Image Upload -->
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Field Images</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors cursor-pointer" id="uploadArea">
+                                <input type="file" multiple accept="image/*" class="hidden" id="imageUpload">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
+                                <p class="text-sm text-gray-600 mb-2">Drag & drop images or click to browse</p>
+                                <p class="text-xs text-gray-500">Supports JPG, PNG, TIFF (max 10MB each)</p>
+                            </div>
+                        </div>
+
+                        <!-- Analysis Type -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Analysis Type</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="mr-2">
+                                    <span class="text-sm">Disease Detection</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="mr-2">
+                                    <span class="text-sm">Pest Identification</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="mr-2">
+                                    <span class="text-sm">Nutrient Deficiency</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="mr-2">
+                                    <span class="text-sm">Water Stress</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2">
+                                    <span class="text-sm">Growth Stage Assessment</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Field Information -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Field Information</label>
+                            <div class="space-y-3">
+                                <select class="input-field w-full text-sm">
+                                    <option>Select crop type...</option>
+                                    <option>Corn</option>
+                                    <option>Soybeans</option>
+                                    <option>Wheat</option>
+                                    <option>Cotton</option>
+                                    <option>Rice</option>
+                                </select>
+                                <select class="input-field w-full text-sm">
+                                    <option>Growth stage...</option>
+                                    <option>Seedling</option>
+                                    <option>Vegetative</option>
+                                    <option>Flowering</option>
+                                    <option>Grain Fill</option>
+                                    <option>Maturity</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button id="analyzeBtn" class="btn-primary w-full" disabled>
+                            <i class="fas fa-microscope mr-2"></i>
+                            Analyze Images
+                        </button>
+
+                        <!-- Quick Stats -->
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-gray-800 mb-3">Quick Stats</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Images Analyzed Today:</span>
+                                    <span class="font-medium">247</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Issues Detected:</span>
+                                    <span class="font-medium">23</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Accuracy Rate:</span>
+                                    <span class="font-medium text-green-600">97.3%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Results -->
+            <div class="lg:col-span-3 space-y-8">
+                <!-- Default State -->
+                <div class="card" id="defaultState">
+                    <div class="text-center py-16">
+                        <i class="fas fa-leaf text-6xl text-gray-300 mb-4"></i>
+                        <h2 class="text-2xl font-bold text-gray-600 mb-2">Ready for Crop Health Analysis</h2>
+                        <p class="text-gray-500 mb-8">Upload field images to get instant AI-powered health insights and recommendations.</p>
+                        
+                        <!-- Feature Overview -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                            <div class="text-center p-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-virus text-red-600"></i>
+                                </div>
+                                <div class="font-medium text-gray-800 mb-1">Disease Detection</div>
+                                <div class="text-sm text-gray-600">Identify fungal, bacterial, and viral diseases</div>
+                            </div>
+                            <div class="text-center p-4">
+                                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-bug text-yellow-600"></i>
+                                </div>
+                                <div class="font-medium text-gray-800 mb-1">Pest Detection</div>
+                                <div class="text-sm text-gray-600">Spot insect damage and infestations</div>
+                            </div>
+                            <div class="text-center p-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-tint text-blue-600"></i>
+                                </div>
+                                <div class="font-medium text-gray-800 mb-1">Water Stress</div>
+                                <div class="text-sm text-gray-600">Detect drought and water-related issues</div>
+                            </div>
+                            <div class="text-center p-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-flask text-purple-600"></i>
+                                </div>
+                                <div class="font-medium text-gray-800 mb-1">Nutrient Analysis</div>
+                                <div class="text-sm text-gray-600">Identify nutrient deficiencies</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis Results -->
+                <div id="analysisResults" style="display: none;">
+                    <!-- Health Overview -->
+                    <div class="card">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold text-gray-800">Health Assessment Summary</h2>
+                            <div class="text-sm text-gray-600">
+                                Analyzed: <span id="analysisTime"></span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                            <div class="text-center p-6 bg-green-50 rounded-xl">
+                                <div class="text-4xl font-bold text-green-600 mb-2" id="healthScore">85</div>
+                                <div class="text-lg text-gray-800 mb-1">%</div>
+                                <div class="text-sm text-gray-600">Overall Health</div>
+                            </div>
+                            <div class="text-center p-6 bg-red-50 rounded-xl">
+                                <div class="text-4xl font-bold text-red-600 mb-2" id="issuesFound">2</div>
+                                <div class="text-lg text-gray-800 mb-1">Issues</div>
+                                <div class="text-sm text-gray-600">Detected</div>
+                            </div>
+                            <div class="text-center p-6 bg-blue-50 rounded-xl">
+                                <div class="text-4xl font-bold text-blue-600 mb-2" id="confidenceLevel">94</div>
+                                <div class="text-lg text-gray-800 mb-1">%</div>
+                                <div class="text-sm text-gray-600">Confidence</div>
+                            </div>
+                            <div class="text-center p-6 bg-yellow-50 rounded-xl">
+                                <div class="text-4xl font-bold text-yellow-600 mb-2" id="riskLevel">Medium</div>
+                                <div class="text-lg text-gray-800 mb-1">Risk</div>
+                                <div class="text-sm text-gray-600">Level</div>
+                            </div>
+                        </div>
+
+                        <!-- Health Indicators -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Disease Resistance</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 90%;"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">90%</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Pest Resistance</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 65%;"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">65%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Nutrient Status</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 85%;"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">85%</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Water Status</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-blue-500 h-2 rounded-full" style="width: 75%;"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">75%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detected Issues -->
+                    <div class="card">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Detected Issues & Recommendations</h2>
+                        
+                        <div class="space-y-6">
+                            <!-- Issue 1 -->
+                            <div class="border rounded-lg p-6 bg-yellow-50 border-yellow-200">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-16 h-16 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-bug text-yellow-600 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <h3 class="text-lg font-semibold text-gray-800">Corn Borer Damage</h3>
+                                            <div class="flex items-center space-x-2">
+                                                <span class="bg-yellow-200 text-yellow-800 px-2 py-1 rounded text-sm font-medium">Medium Severity</span>
+                                                <span class="text-sm text-gray-600">89% Confidence</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 mb-4">
+                                            European corn borer larvae detected on several plants. Small holes visible in stalks and leaves, indicating active infestation.
+                                        </p>
+                                        <div class="bg-white rounded-lg p-4">
+                                            <h4 class="font-medium text-gray-800 mb-2">Recommended Actions:</h4>
+                                            <ul class="text-sm text-gray-600 space-y-1">
+                                                <li>• Apply targeted insecticide treatment within 3-5 days</li>
+                                                <li>• Monitor adjacent fields for spread</li>
+                                                <li>• Consider beneficial insect release for biological control</li>
+                                                <li>• Implement crop rotation for next season</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Issue 2 -->
+                            <div class="border rounded-lg p-6 bg-blue-50 border-blue-200">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-tint text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <h3 class="text-lg font-semibold text-gray-800">Mild Water Stress</h3>
+                                            <div class="flex items-center space-x-2">
+                                                <span class="bg-blue-200 text-blue-800 px-2 py-1 rounded text-sm font-medium">Low Severity</span>
+                                                <span class="text-sm text-gray-600">76% Confidence</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 mb-4">
+                                            Some plants showing early signs of water stress. Leaf edges appear slightly wilted, and growth rate may be reduced.
+                                        </p>
+                                        <div class="bg-white rounded-lg p-4">
+                                            <h4 class="font-medium text-gray-800 mb-2">Recommended Actions:</h4>
+                                            <ul class="text-sm text-gray-600 space-y-1">
+                                                <li>• Increase irrigation frequency for next 7-10 days</li>
+                                                <li>• Check soil moisture levels at multiple depths</li>
+                                                <li>• Consider mulching to retain soil moisture</li>
+                                                <li>• Monitor weather forecast for natural precipitation</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Analysis Results -->
+                    <div class="card">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Image Analysis Results</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="imageResults">
+                            <!-- Sample analyzed images would be displayed here -->
+                            <div class="border rounded-lg overflow-hidden">
+                                <div class="bg-gray-200 h-48 flex items-center justify-center">
+                                    <i class="fas fa-image text-4xl text-gray-400"></i>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-medium text-gray-800">Field_Image_001.jpg</span>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Healthy</span>
+                                    </div>
+                                    <div class="text-sm text-gray-600">
+                                        No issues detected • Confidence: 94%
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border rounded-lg overflow-hidden">
+                                <div class="bg-gray-200 h-48 flex items-center justify-center">
+                                    <i class="fas fa-image text-4xl text-gray-400"></i>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-medium text-gray-800">Field_Image_002.jpg</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Issues Found</span>
+                                    </div>
+                                    <div class="text-sm text-gray-600">
+                                        Pest damage detected • Confidence: 89%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Treatment Timeline -->
+                    <div class="card">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Recommended Treatment Timeline</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 bg-red-50 rounded-lg border-l-4 border-red-400">
+                                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                                    <span class="text-red-600 font-bold text-sm">1</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-gray-800">Immediate (0-3 days)</div>
+                                    <div class="text-sm text-gray-600">Apply insecticide treatment for corn borer control</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-sm text-red-600 font-medium">Critical</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                                    <span class="text-blue-600 font-bold text-sm">2</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-gray-800">Short-term (3-7 days)</div>
+                                    <div class="text-sm text-gray-600">Increase irrigation to address water stress</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-sm text-blue-600 font-medium">Important</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                                <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                                    <span class="text-yellow-600 font-bold text-sm">3</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-gray-800">Follow-up (1-2 weeks)</div>
+                                    <div class="text-sm text-gray-600">Monitor treatment effectiveness and re-assess crop health</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-sm text-yellow-600 font-medium">Monitor</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const imageUpload = document.getElementById('imageUpload');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    let uploadedFiles = [];
+
+    // Upload area click handler
+    uploadArea.addEventListener('click', function() {
+        imageUpload.click();
+    });
+
+    // File upload handler
+    imageUpload.addEventListener('change', function(e) {
+        uploadedFiles = Array.from(e.target.files);
+        updateUploadArea();
+        analyzeBtn.disabled = uploadedFiles.length === 0;
+    });
+
+    // Drag and drop handlers
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.classList.add('border-green-400', 'bg-green-50');
+    });
+
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('border-green-400', 'bg-green-50');
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('border-green-400', 'bg-green-50');
+        
+        const files = Array.from(e.dataTransfer.files).filter(file => 
+            file.type.startsWith('image/')
+        );
+        
+        if (files.length > 0) {
+            uploadedFiles = files;
+            updateUploadArea();
+            analyzeBtn.disabled = false;
+        }
+    });
+
+    function updateUploadArea() {
+        if (uploadedFiles.length > 0) {
+            uploadArea.innerHTML = `
+                <i class="fas fa-check-circle text-4xl text-green-500 mb-2"></i>
+                <p class="text-sm text-gray-800 mb-2">${uploadedFiles.length} image(s) ready for analysis</p>
+                <p class="text-xs text-gray-500">Click to select different images</p>
+            `;
+        }
+    }
+
+    // Analysis button handler
+    analyzeBtn.addEventListener('click', function() {
+        if (uploadedFiles.length === 0) return;
+        
+        // Show loading state
+        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...';
+        this.disabled = true;
+        
+        // Hide default state
+        document.getElementById('defaultState').style.display = 'none';
+        
+        // Simulate analysis
+        setTimeout(() => {
+            // Show results
+            document.getElementById('analysisResults').style.display = 'block';
+            document.getElementById('analysisTime').textContent = new Date().toLocaleString();
+            
+            // Reset button
+            this.innerHTML = '<i class="fas fa-microscope mr-2"></i>Analyze Images';
+            this.disabled = false;
+            
+            // Scroll to results
+            document.getElementById('analysisResults').scrollIntoView({ behavior: 'smooth' });
+        }, 3000);
+    });
+});
+</script>
+{% endblock %}

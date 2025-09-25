@@ -5,33 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Agriculture Insights Platform{% endblock %}</title>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS (Built) -->
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/output.css') }}">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/custom.css') }}">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'agri-green': '#16a34a',
-                        'agri-light-green': '#22c55e',
-                        'agri-dark-green': '#15803d',
-                        'agri-brown': '#a16207',
-                        'agri-light-brown': '#ca8a04',
-                    }
-                }
-            }
-        }
-    </script>
 
     {% block extra_head %}{% endblock %}
 </head>
@@ -43,7 +29,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <a href="/" class="flex items-center">
-                            <i class="fas fa-seedling text-agri-green text-2xl mr-2"></i>
+                            <i class="fas fa-seedling text-agri-600 text-2xl mr-2"></i>
                             <span class="font-bold text-xl text-gray-800">AgriInsights</span>
                         </a>
                     </div>
@@ -52,17 +38,17 @@
                     <div class="hidden md:ml-10 md:flex md:space-x-8">
                         {% if current_user %}
                             {% if current_user.role == 'farmer' %}
-                                <a href="/farmer/dashboard" class="text-gray-900 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                                <a href="/farmer/predictions" class="text-gray-500 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Predictions</a>
-                                <a href="/farmer/alerts" class="text-gray-500 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Alerts</a>
+                                <a href="/farmer/dashboard" class="text-gray-900 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                                <a href="/farmer/predictions" class="text-gray-500 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Predictions</a>
+                                <a href="/farmer/alerts" class="text-gray-500 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Alerts</a>
                             {% elif current_user.role == 'agronomist' %}
-                                <a href="/agronomist/dashboard" class="text-gray-900 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                                <a href="/agronomist/farmers" class="text-gray-500 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Farmers</a>
-                                <a href="/agronomist/validations" class="text-gray-500 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Validations</a>
+                                <a href="/agronomist/dashboard" class="text-gray-900 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                                <a href="/agronomist/farmers" class="text-gray-500 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Farmers</a>
+                                <a href="/agronomist/validations" class="text-gray-500 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Validations</a>
                             {% elif current_user.role == 'researcher' %}
-                                <a href="/researcher/dashboard" class="text-gray-900 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                                <a href="/researcher/data" class="text-gray-500 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Research Data</a>
-                                <a href="/researcher/export" class="text-gray-500 hover:text-agri-green px-3 py-2 rounded-md text-sm font-medium">Export</a>
+                                <a href="/researcher/dashboard" class="text-gray-900 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                                <a href="/researcher/data" class="text-gray-500 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Research Data</a>
+                                <a href="/researcher/export" class="text-gray-500 hover:text-agri-600 px-3 py-2 rounded-md text-sm font-medium">Export</a>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -94,7 +80,7 @@
                         </div>
                     {% else %}
                         <a href="/login" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
-                        <a href="/signup" class="bg-agri-green text-white hover:bg-agri-dark-green px-4 py-2 rounded-md text-sm font-medium">Sign Up</a>
+                        <a href="/signup" class="btn-primary">Sign Up</a>
                     {% endif %}
                 </div>
             </div>
@@ -123,7 +109,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-seedling text-agri-green text-2xl mr-2"></i>
+                        <i class="fas fa-seedling text-agri-500 text-2xl mr-2"></i>
                         <span class="font-bold text-xl">AgriInsights</span>
                     </div>
                     <p class="text-gray-300 text-sm">

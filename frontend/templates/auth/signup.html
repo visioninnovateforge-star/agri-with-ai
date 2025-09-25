@@ -1,0 +1,456 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - Agriculture Insights Platform{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="text-center">
+            <i class="fas fa-seedling text-4xl text-agri-600 mb-4"></i>
+            <h2 class="text-3xl font-bold text-gray-900">Create your account</h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Already have an account? 
+                <a href="/login" class="font-medium text-agri-600 hover:text-agri-500">
+                    Sign in here
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
+        <div class="card">
+            <!-- Multi-step Form -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-agri-600 rounded-full flex items-center justify-center text-white text-sm font-medium" id="step1">1</div>
+                        <div class="w-20 h-1 bg-gray-200" id="progress1"></div>
+                        <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 text-sm font-medium" id="step2">2</div>
+                        <div class="w-20 h-1 bg-gray-200" id="progress2"></div>
+                        <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 text-sm font-medium" id="step3">3</div>
+                    </div>
+                </div>
+                <div class="mt-2 text-sm text-gray-600">
+                    <span id="stepText">Step 1: Choose your role</span>
+                </div>
+            </div>
+
+            <form id="signupForm">
+                <!-- Step 1: Role Selection -->
+                <div id="roleStep" class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">I am a...</h3>
+                        <div class="space-y-4">
+                            <label class="relative flex cursor-pointer rounded-lg border p-4 focus:outline-none" id="farmer-option">
+                                <input type="radio" name="role" value="farmer" class="sr-only">
+                                <div class="flex w-full items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-agri-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-tractor text-agri-600 text-xl"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <div class="font-medium text-gray-900">Farmer</div>
+                                            <div class="text-sm text-gray-500">Upload field data and get yield predictions</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-check text-agri-600 hidden" id="farmer-check"></i>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="relative flex cursor-pointer rounded-lg border p-4 focus:outline-none" id="agronomist-option">
+                                <input type="radio" name="role" value="agronomist" class="sr-only">
+                                <div class="flex w-full items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-earth-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-microscope text-earth-600 text-xl"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <div class="font-medium text-gray-900">Agronomist</div>
+                                            <div class="text-sm text-gray-500">Analyze farmer data and validate predictions</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-check text-earth-600 hidden" id="agronomist-check"></i>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="relative flex cursor-pointer rounded-lg border p-4 focus:outline-none" id="researcher-option">
+                                <input type="radio" name="role" value="researcher" class="sr-only">
+                                <div class="flex w-full items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-flask text-blue-600 text-xl"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <div class="font-medium text-gray-900">Researcher</div>
+                                            <div class="text-sm text-gray-500">Access aggregated data for agricultural research</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-check text-blue-600 hidden" id="researcher-check"></i>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="button" id="nextStep1" class="btn-primary w-full" disabled>
+                        Continue <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+
+                <!-- Step 2: Personal Information -->
+                <div id="personalStep" class="space-y-6" style="display: none;">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="firstName" class="block text-sm font-medium text-gray-700">
+                                First name *
+                            </label>
+                            <input type="text" id="firstName" name="firstName" required 
+                                   class="input-field w-full mt-1" placeholder="John">
+                        </div>
+                        <div>
+                            <label for="lastName" class="block text-sm font-medium text-gray-700">
+                                Last name *
+                            </label>
+                            <input type="text" id="lastName" name="lastName" required 
+                                   class="input-field w-full mt-1" placeholder="Doe">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">
+                            Email address *
+                        </label>
+                        <input type="email" id="email" name="email" required 
+                               class="input-field w-full mt-1" placeholder="john@example.com">
+                    </div>
+
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700">
+                            Phone number
+                        </label>
+                        <input type="tel" id="phone" name="phone" 
+                               class="input-field w-full mt-1" placeholder="+1 (555) 123-4567">
+                    </div>
+
+                    <div>
+                        <label for="organization" class="block text-sm font-medium text-gray-700">
+                            <span id="orgLabel">Farm/Organization name</span>
+                        </label>
+                        <input type="text" id="organization" name="organization" 
+                               class="input-field w-full mt-1" placeholder="Green Valley Farm">
+                    </div>
+
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-gray-700">
+                            Location *
+                        </label>
+                        <input type="text" id="location" name="location" required 
+                               class="input-field w-full mt-1" placeholder="City, State/Province, Country">
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="button" id="backStep1" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                            <i class="fas fa-arrow-left mr-2"></i>Back
+                        </button>
+                        <button type="button" id="nextStep2" class="btn-primary">
+                            Continue <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Account Setup -->
+                <div id="accountStep" class="space-y-6" style="display: none;">
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">
+                            Password *
+                        </label>
+                        <div class="mt-1 relative">
+                            <input type="password" id="password" name="password" required 
+                                   class="input-field w-full pr-10" placeholder="Create a strong password">
+                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" 
+                                    onclick="togglePassword('password')">
+                                <i class="fas fa-eye text-gray-400" id="password-eye"></i>
+                            </button>
+                        </div>
+                        <div class="mt-2">
+                            <div class="text-xs text-gray-500 space-y-1">
+                                <div class="flex items-center" id="length-check">
+                                    <i class="fas fa-times text-red-500 mr-2"></i>
+                                    <span>At least 8 characters</span>
+                                </div>
+                                <div class="flex items-center" id="uppercase-check">
+                                    <i class="fas fa-times text-red-500 mr-2"></i>
+                                    <span>One uppercase letter</span>
+                                </div>
+                                <div class="flex items-center" id="number-check">
+                                    <i class="fas fa-times text-red-500 mr-2"></i>
+                                    <span>One number</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
+                            Confirm password *
+                        </label>
+                        <div class="mt-1 relative">
+                            <input type="password" id="confirmPassword" name="confirmPassword" required 
+                                   class="input-field w-full pr-10" placeholder="Confirm your password">
+                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" 
+                                    onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye text-gray-400" id="confirmPassword-eye"></i>
+                            </button>
+                        </div>
+                        <div id="password-match" class="mt-1 text-xs" style="display: none;">
+                            <div class="flex items-center text-red-500">
+                                <i class="fas fa-times mr-2"></i>
+                                <span>Passwords do not match</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Privacy -->
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <input id="terms" name="terms" type="checkbox" required
+                                   class="h-4 w-4 text-agri-600 focus:ring-agri-500 border-gray-300 rounded mt-1">
+                            <label for="terms" class="ml-2 block text-sm text-gray-900">
+                                I agree to the 
+                                <a href="/terms" class="text-agri-600 hover:text-agri-500" target="_blank">Terms of Service</a> 
+                                and 
+                                <a href="/privacy" class="text-agri-600 hover:text-agri-500" target="_blank">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input id="newsletter" name="newsletter" type="checkbox"
+                                   class="h-4 w-4 text-agri-600 focus:ring-agri-500 border-gray-300 rounded mt-1">
+                            <label for="newsletter" class="ml-2 block text-sm text-gray-900">
+                                Send me product updates and agricultural insights via email
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="button" id="backStep2" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                            <i class="fas fa-arrow-left mr-2"></i>Back
+                        </button>
+                        <button type="submit" id="createAccount" class="btn-primary">
+                            <i class="fas fa-user-plus mr-2"></i>Create Account
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentStep = 1;
+let selectedRole = '';
+
+// Role selection handlers
+document.querySelectorAll('input[name="role"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        selectedRole = this.value;
+        
+        // Update UI
+        document.querySelectorAll('[id$="-option"]').forEach(option => {
+            option.classList.remove('border-agri-500', 'border-earth-500', 'border-blue-500');
+            option.classList.add('border-gray-200');
+        });
+        
+        document.querySelectorAll('[id$="-check"]').forEach(check => {
+            check.classList.add('hidden');
+        });
+        
+        const selectedOption = document.getElementById(this.value + '-option');
+        const selectedCheck = document.getElementById(this.value + '-check');
+        
+        if (this.value === 'farmer') {
+            selectedOption.classList.add('border-agri-500');
+        } else if (this.value === 'agronomist') {
+            selectedOption.classList.add('border-earth-500');
+        } else if (this.value === 'researcher') {
+            selectedOption.classList.add('border-blue-500');
+        }
+        
+        selectedCheck.classList.remove('hidden');
+        document.getElementById('nextStep1').disabled = false;
+        
+        // Update organization label
+        const orgLabel = document.getElementById('orgLabel');
+        if (this.value === 'farmer') {
+            orgLabel.textContent = 'Farm name';
+        } else if (this.value === 'agronomist') {
+            orgLabel.textContent = 'Company/Organization';
+        } else if (this.value === 'researcher') {
+            orgLabel.textContent = 'Institution/Organization';
+        }
+    });
+});
+
+// Step navigation
+document.getElementById('nextStep1').addEventListener('click', function() {
+    if (selectedRole) {
+        showStep(2);
+    }
+});
+
+document.getElementById('nextStep2').addEventListener('click', function() {
+    if (validatePersonalInfo()) {
+        showStep(3);
+    }
+});
+
+document.getElementById('backStep1').addEventListener('click', function() {
+    showStep(1);
+});
+
+document.getElementById('backStep2').addEventListener('click', function() {
+    showStep(2);
+});
+
+function showStep(step) {
+    // Hide all steps
+    document.getElementById('roleStep').style.display = 'none';
+    document.getElementById('personalStep').style.display = 'none';
+    document.getElementById('accountStep').style.display = 'none';
+    
+    // Update progress indicators
+    for (let i = 1; i <= 3; i++) {
+        const stepEl = document.getElementById('step' + i);
+        const progressEl = document.getElementById('progress' + i);
+        
+        if (i < step) {
+            stepEl.classList.add('bg-agri-600', 'text-white');
+            stepEl.classList.remove('bg-gray-200', 'text-gray-500');
+            if (progressEl) progressEl.classList.add('bg-agri-600');
+        } else if (i === step) {
+            stepEl.classList.add('bg-agri-600', 'text-white');
+            stepEl.classList.remove('bg-gray-200', 'text-gray-500');
+        } else {
+            stepEl.classList.add('bg-gray-200', 'text-gray-500');
+            stepEl.classList.remove('bg-agri-600', 'text-white');
+            if (progressEl) progressEl.classList.remove('bg-agri-600');
+        }
+    }
+    
+    // Show current step
+    if (step === 1) {
+        document.getElementById('roleStep').style.display = 'block';
+        document.getElementById('stepText').textContent = 'Step 1: Choose your role';
+    } else if (step === 2) {
+        document.getElementById('personalStep').style.display = 'block';
+        document.getElementById('stepText').textContent = 'Step 2: Personal information';
+    } else if (step === 3) {
+        document.getElementById('accountStep').style.display = 'block';
+        document.getElementById('stepText').textContent = 'Step 3: Create account';
+    }
+    
+    currentStep = step;
+}
+
+function validatePersonalInfo() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const location = document.getElementById('location').value.trim();
+    
+    return firstName && lastName && email && location;
+}
+
+// Password validation
+document.getElementById('password').addEventListener('input', function() {
+    const password = this.value;
+    
+    // Length check
+    const lengthCheck = document.getElementById('length-check');
+    if (password.length >= 8) {
+        lengthCheck.innerHTML = '<i class="fas fa-check text-green-500 mr-2"></i><span>At least 8 characters</span>';
+    } else {
+        lengthCheck.innerHTML = '<i class="fas fa-times text-red-500 mr-2"></i><span>At least 8 characters</span>';
+    }
+    
+    // Uppercase check
+    const uppercaseCheck = document.getElementById('uppercase-check');
+    if (/[A-Z]/.test(password)) {
+        uppercaseCheck.innerHTML = '<i class="fas fa-check text-green-500 mr-2"></i><span>One uppercase letter</span>';
+    } else {
+        uppercaseCheck.innerHTML = '<i class="fas fa-times text-red-500 mr-2"></i><span>One uppercase letter</span>';
+    }
+    
+    // Number check
+    const numberCheck = document.getElementById('number-check');
+    if (/[0-9]/.test(password)) {
+        numberCheck.innerHTML = '<i class="fas fa-check text-green-500 mr-2"></i><span>One number</span>';
+    } else {
+        numberCheck.innerHTML = '<i class="fas fa-times text-red-500 mr-2"></i><span>One number</span>';
+    }
+});
+
+// Confirm password validation
+document.getElementById('confirmPassword').addEventListener('input', function() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = this.value;
+    const matchDiv = document.getElementById('password-match');
+    
+    if (confirmPassword && password !== confirmPassword) {
+        matchDiv.style.display = 'block';
+    } else {
+        matchDiv.style.display = 'none';
+    }
+});
+
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    const eye = document.getElementById(fieldId + '-eye');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        eye.classList.remove('fa-eye');
+        eye.classList.add('fa-eye-slash');
+    } else {
+        field.type = 'password';
+        eye.classList.remove('fa-eye-slash');
+        eye.classList.add('fa-eye');
+    }
+}
+
+// Form submission
+document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+    }
+    
+    if (!document.getElementById('terms').checked) {
+        alert('Please accept the Terms of Service and Privacy Policy');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = document.getElementById('createAccount');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating account...';
+    submitBtn.disabled = true;
+    
+    // Simulate account creation
+    setTimeout(() => {
+        alert('Account created successfully! Please check your email to verify your account.');
+        window.location.href = '/login';
+    }, 2000);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block title %}Agronomist Dashboard - Agriculture Insights Platform{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="bg-gradient-to-r from-earth-600 to-earth-700 text-white py-8">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">Agronomist Dashboard</h1>
+                <p class="text-earth-100">Managing 25 farms across 3 regions</p>
+            </div>
+            <div class="text-right">
+                <div class="text-2xl font-bold">Dr. Sarah Martinez</div>
+                <div class="text-earth-200">Certified Crop Advisor</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-earth-600">25</div>
+                    <div class="text-sm text-gray-600">Active Farms</div>
+                </div>
+            </div>
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-blue-600">8</div>
+                    <div class="text-sm text-gray-600">Pending Reviews</div>
+                </div>
+            </div>
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-600">92%</div>
+                    <div class="text-sm text-gray-600">Avg Health Score</div>
+                </div>
+            </div>
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-600">3</div>
+                    <div class="text-sm text-gray-600">High Risk Farms</div>
+                </div>
+            </div>
+            <div class="card bg-white">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-purple-600">156</div>
+                    <div class="text-sm text-gray-600">Reports This Month</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="py-8">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Farm Comparison -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Multi-Farm Comparison</h2>
+                        <div class="flex space-x-2">
+                            <select class="input-field text-sm">
+                                <option>NDVI Comparison</option>
+                                <option>Yield Predictions</option>
+                                <option>Stress Levels</option>
+                                <option>Soil Health</option>
+                            </select>
+                            <button class="btn-primary text-sm">
+                                <i class="fas fa-chart-bar mr-1"></i>
+                                Generate Report
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Chart Placeholder -->
+                    <div class="bg-gray-100 rounded-lg h-80 flex items-center justify-center mb-4">
+                        <div class="text-center text-gray-600">
+                            <canvas id="farmComparisonChart" width="600" height="300"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Farm Legend -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                            <span>Johnson Farm</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                            <span>Miller Ranch</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                            <span>Green Valley</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                            <span>Oak Hills Farm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Validation Queue -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Prediction Validation Queue</h2>
+                        <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            8 Pending
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="font-semibold text-gray-800">Johnson Farm - Yield Prediction</div>
+                                    <div class="text-sm text-gray-500">2 hours ago</div>
+                                </div>
+                                <div class="text-sm text-gray-600 mb-3">
+                                    AI predicts 165 bu/acre for North Field (corn). Confidence: 95%
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
+                                        <i class="fas fa-check mr-1"></i>Approve
+                                    </button>
+                                    <button class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+                                        <i class="fas fa-times mr-1"></i>Reject
+                                    </button>
+                                    <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                                        <i class="fas fa-edit mr-1"></i>Modify
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-4 bg-orange-50 border-l-4 border-orange-400 rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="font-semibold text-gray-800">Miller Ranch - Stress Alert</div>
+                                    <div class="text-sm text-gray-500">4 hours ago</div>
+                                </div>
+                                <div class="text-sm text-gray-600 mb-3">
+                                    Water stress detected in Section C2. Recommend immediate irrigation.
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
+                                        <i class="fas fa-check mr-1"></i>Approve
+                                    </button>
+                                    <button class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+                                        <i class="fas fa-times mr-1"></i>Reject
+                                    </button>
+                                    <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                                        <i class="fas fa-edit mr-1"></i>Modify
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-4 bg-red-50 border-l-4 border-red-400 rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="font-semibold text-gray-800">Green Valley - Disease Risk</div>
+                                    <div class="text-sm text-gray-500">6 hours ago</div>
+                                </div>
+                                <div class="text-sm text-gray-600 mb-3">
+                                    High risk of fungal infection detected. Immediate fungicide treatment recommended.
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
+                                        <i class="fas fa-check mr-1"></i>Approve
+                                    </button>
+                                    <button class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+                                        <i class="fas fa-times mr-1"></i>Reject
+                                    </button>
+                                    <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                                        <i class="fas fa-edit mr-1"></i>Modify
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <a href="/agronomist/validation" class="text-earth-600 hover:text-earth-700 font-medium">
+                            View All Validations <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-8">
+                <!-- Quick Actions -->
+                <div class="card">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Quick Actions</h2>
+                    
+                    <div class="space-y-3">
+                        <button class="w-full p-4 bg-earth-600 text-white rounded-lg hover:bg-earth-700 transition-colors text-left">
+                            <i class="fas fa-clipboard-check mr-2"></i>
+                            <div class="font-medium">Validate Predictions</div>
+                            <div class="text-sm text-earth-100">8 pending reviews</div>
+                        </button>
+
+                        <button class="w-full p-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-left">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            <div class="font-medium">Generate Analytics</div>
+                            <div class="text-sm text-blue-100">Multi-farm analysis</div>
+                        </button>
+
+                        <button class="w-full p-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-left">
+                            <i class="fas fa-file-alt mr-2"></i>
+                            <div class="font-medium">Create Report</div>
+                            <div class="text-sm text-green-100">Weekly summary</div>
+                        </button>
+
+                        <button class="w-full p-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-left">
+                            <i class="fas fa-users mr-2"></i>
+                            <div class="font-medium">Farmer Consultation</div>
+                            <div class="text-sm text-purple-100">Schedule meeting</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Farm Priority List -->
+                <div class="card">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Priority Farms</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <div class="flex-1">
+                                <div class="font-semibold text-gray-800">Oak Hills Farm</div>
+                                <div class="text-sm text-gray-600">Disease outbreak detected</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-red-600 font-medium">HIGH RISK</div>
+                                <div class="text-xs text-gray-500">2 days ago</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                            <div class="flex-1">
+                                <div class="font-semibold text-gray-800">Prairie View</div>
+                                <div class="text-sm text-gray-600">Irrigation issues</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-yellow-600 font-medium">MEDIUM</div>
+                                <div class="text-xs text-gray-500">1 day ago</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-3 bg-orange-50 rounded-lg border-l-4 border-orange-400">
+                            <div class="flex-1">
+                                <div class="font-semibold text-gray-800">Sunset Ranch</div>
+                                <div class="text-sm text-gray-600">Low yield prediction</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-orange-600 font-medium">MEDIUM</div>
+                                <div class="text-xs text-gray-500">3 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <a href="/agronomist/farms" class="text-earth-600 hover:text-earth-700 font-medium">
+                            View All Farms <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recent Reports -->
+                <div class="card">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Recent Reports</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-pdf text-blue-600 text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium text-gray-800">Weekly Analysis Report</div>
+                                <div class="text-xs text-gray-500">25 farms • Today</div>
+                                <div class="text-xs text-blue-600 mt-1">
+                                    <a href="#" class="hover:underline">Download PDF</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-bar text-green-600 text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium text-gray-800">Yield Prediction Summary</div>
+                                <div class="text-xs text-gray-500">North Region • Yesterday</div>
+                                <div class="text-xs text-green-600 mt-1">
+                                    <a href="#" class="hover:underline">View Report</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-exclamation-triangle text-yellow-600 text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium text-gray-800">Risk Assessment</div>
+                                <div class="text-xs text-gray-500">High-risk farms • 2 days ago</div>
+                                <div class="text-xs text-yellow-600 mt-1">
+                                    <a href="#" class="hover:underline">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Farm Comparison Chart
+    const ctx = document.getElementById('farmComparisonChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Johnson Farm', 'Miller Ranch', 'Green Valley', 'Oak Hills', 'Prairie View', 'Sunset Ranch'],
+            datasets: [{
+                label: 'NDVI Score',
+                data: [0.85, 0.78, 0.92, 0.45, 0.67, 0.71],
+                backgroundColor: [
+                    '#10B981', // green
+                    '#10B981',
+                    '#10B981',
+                    '#EF4444', // red
+                    '#F59E0B', // yellow
+                    '#F59E0B'
+                ],
+                borderColor: [
+                    '#059669',
+                    '#059669',
+                    '#059669',
+                    '#DC2626',
+                    '#D97706',
+                    '#D97706'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 1.0,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toFixed(1);
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return 'NDVI: ' + context.parsed.y.toFixed(2);
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

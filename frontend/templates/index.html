@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Agriculture Insights Platform - Smart Farming Solutions{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-r from-green-600 to-green-800 text-white">
+    <div class="container mx-auto px-4 py-16">
+        <div class="text-center">
+            <h1 class="text-5xl font-bold mb-6">Smart Agriculture Insights</h1>
+            <p class="text-xl mb-8">Empowering farmers with AI-driven predictions and real-time insights</p>
+            <div class="space-x-4">
+                <a href="/signup" class="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100">Get Started</a>
+                <a href="/login" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-600">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div class="text-center p-6">
+            <i class="fas fa-seedling text-4xl text-green-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Farmers</h3>
+            <p class="text-gray-600">Upload field data and get ML-powered yield predictions</p>
+        </div>
+        <div class="text-center p-6">
+            <i class="fas fa-microscope text-4xl text-green-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Agronomists</h3>
+            <p class="text-gray-600">Analyze farmer data and validate predictions</p>
+        </div>
+        <div class="text-center p-6">
+            <i class="fas fa-chart-line text-4xl text-green-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Researchers</h3>
+            <p class="text-gray-600">Access aggregated data for agricultural research</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
